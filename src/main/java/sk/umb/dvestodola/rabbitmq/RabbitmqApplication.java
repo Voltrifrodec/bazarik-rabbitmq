@@ -11,8 +11,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import sk.umb.dvestodola.rabbitmq.services.Receiver;
-
 @SpringBootApplication
 public class RabbitmqApplication {
 
