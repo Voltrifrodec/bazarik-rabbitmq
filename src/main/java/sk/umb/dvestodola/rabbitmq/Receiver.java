@@ -5,10 +5,18 @@ import java.util.concurrent.CountDownLatch;
 
 import org.springframework.stereotype.Component;
 
+import sk.umb.dvestodola.rabbitmq.GptRender.GptRenderService;
+
 @Component
 public class Receiver {
 
   private CountDownLatch latch = new CountDownLatch(1);
+
+  private GptRenderService gptRenderService;
+
+  public Receiver(GptRenderService gptRenderService) {
+	this.gptRenderService = gptRenderService;
+  }
 
   public byte[] receiveMessage(String message) {
 		System.out.println("Receiver received a message, " + message);
@@ -18,6 +26,7 @@ public class Receiver {
 		try {
 			// Simulating generating image
 			this.simulateApiCall();
+			System.out.println("Message from Chad: " + gptRenderService.chat("Hello"));
 
 			return getClass().getResourceAsStream("/generated_image.jpg").readAllBytes();
 		} catch (IOException e) {
