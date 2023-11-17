@@ -5,17 +5,17 @@ import java.util.concurrent.CountDownLatch;
 
 import org.springframework.stereotype.Component;
 
-import sk.umb.dvestodola.rabbitmq.GptRender.GptRenderService;
+import sk.umb.dvestodola.rabbitmq.OpenAI.service.OpenAIService;
 
 @Component
 public class Receiver {
 
   private CountDownLatch latch = new CountDownLatch(1);
 
-  private GptRenderService gptRenderService;
+  private OpenAIService openAIService;
 
-  public Receiver(GptRenderService gptRenderService) {
-	this.gptRenderService = gptRenderService;
+  public Receiver(OpenAIService openAIService) {
+	this.openAIService = openAIService;
   }
 
   public byte[] receiveMessage(String message) {
@@ -26,7 +26,7 @@ public class Receiver {
 		try {
 			// Simulating generating image
 			this.simulateApiCall();
-			System.out.println("Message from Chad: " + gptRenderService.chat("Hello"));
+
 
 			return getClass().getResourceAsStream("/generated_image.jpg").readAllBytes();
 		} catch (IOException e) {
@@ -42,6 +42,7 @@ public class Receiver {
 		System.out.println("Simulating an api call");
 		int miliseconds = 2 * 1000;
 		try {
+			// System.out.println("Message from Chad: " + openAIService.chat("Hello"));
 			Thread.sleep(miliseconds);
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
