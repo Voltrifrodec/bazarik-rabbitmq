@@ -12,11 +12,9 @@ public class ImageGeneratorService {
 
 	@Value("${openai.model}")
 	private String model;
-	// private String model = "gpt-3.5-turbo";
 	
 	@Value("${openai.api.url}")
 	private String url;
-	// private String url = "https://api.openai.com/v1/chat/completions";
 
 	public byte[] generateImage(String advertName) {
 		System.out.println("Generate image method was called with prompt, " + advertName);
@@ -29,13 +27,12 @@ public class ImageGeneratorService {
     System.out.println(url);
     System.out.println(request.toString());
 
-    Object response = restTemplate.postForObject(url, request, ImageGeneratorResponseDto.class);
-    if (response == null) {
+    ImageGeneratorResponseDto response = restTemplate.postForObject(url, request, ImageGeneratorResponseDto.class);
+    if (response == null || response.getData() == null || response.getData().get(0) == null || response.getData().get(0).getB64_json() == null) {
       throw new RuntimeException("Response is null.");
     }
     System.out.println(response.toString());
 
-		// return response.getData().get(0).getUrl();
-    return new byte[0];
+		return response.getData().get(0).getB64_json().getBytes();
 	}
 }

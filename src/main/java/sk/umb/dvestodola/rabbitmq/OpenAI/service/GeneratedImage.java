@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class GeneratedImage {
-  private byte[] url;
+  private String url;
+  private String b64_json;
 }
