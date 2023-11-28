@@ -5,7 +5,8 @@ import java.util.concurrent.CountDownLatch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import sk.umb.dvestodola.rabbitmq.OpenAI.service.ImageGeneratorService;
+import sk.umb.dvestodola.rabbitmq.DallEHack.DEHService;
+// import sk.umb.dvestodola.rabbitmq.OpenAI.service.ImageGeneratorService;
 
 @Component
 public class Receiver {
@@ -13,19 +14,30 @@ public class Receiver {
 	private CountDownLatch latch = new CountDownLatch(1);
 
 	@Autowired
-  private ImageGeneratorService generateImageService;
+	private DEHService dehService;
 
 	public byte[] receiveMessage(String message) {
-		System.out.println("Receiver received a message, " + message);
+		System.out.println("Receiver received a message of length " + message.length());
 
-		// TODO: Get generated image by AI with API call
+		return dehService.generateImage(message);
+
+	}
+
+	// @Autowired
+  	// private ImageGeneratorService generateImageService;
+
+	// public byte[] receiveMessage(String message) {
+	// 	System.out.println("Receiver received a message, " + message);
+
+	// 	// TODO: Get generated image by AI with API call
 		
-		return generateImageService.generateImage(message);
-  }
+	// 	return generateImageService.generateImage(message);
 
-  public CountDownLatch getLatch() {
-    return latch;
-  }
+  	// }
+
+ 	public CountDownLatch getLatch() {
+    	return latch;
+  	}
 
 	@SuppressWarnings("unused")
 	private void simulateApiCall() {

@@ -14,9 +14,6 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class RabbitmqApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(RabbitmqApplication.class, args);
-	}
 
 	static final String topicExchangeName = "spring-boot-exchange";
   static final String queueName = "spring-boot";
@@ -51,4 +48,7 @@ public class RabbitmqApplication {
     return new MessageListenerAdapter(receiver, "receiveMessage");
   }
 
+  public static void main(String[] args) {
+    SpringApplication.run(RabbitmqApplication.class, args).close();
+  }
 }
